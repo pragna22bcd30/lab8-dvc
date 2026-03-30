@@ -3,14 +3,17 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 
-# Load dataset (Version 1 - first 5000 rows already prepared)
+# Load dataset
 df = pd.read_csv("data/housing.csv")
+
+# Handle missing values (IMPORTANT FIX)
+df = df.fillna(df.mean(numeric_only=True))
 
 # Separate features and target
 X = df.drop("median_house_value", axis=1)
 y = df["median_house_value"]
 
-# Handle categorical column (ocean_proximity)
+# Convert categorical column
 X = pd.get_dummies(X)
 
 # Train-test split
@@ -29,7 +32,6 @@ y_pred = model.predict(X_test)
 rmse = mean_squared_error(y_test, y_pred, squared=False)
 r2 = r2_score(y_test, y_pred)
 
-# Print results (IMPORTANT for GitHub Actions logs)
 print("===== MODEL RESULTS =====")
 print(f"Dataset size: {len(df)}")
 print(f"RMSE: {rmse}")
