@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
-
+import numpy as np
 # Load dataset
 df = pd.read_csv("data/housing.csv")
 
@@ -29,7 +29,7 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
 # Metrics
-rmse = mean_squared_error(y_test, y_pred, squared=False)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 r2 = r2_score(y_test, y_pred)
 
 print("===== MODEL RESULTS =====")
